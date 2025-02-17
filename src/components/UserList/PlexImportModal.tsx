@@ -1,11 +1,11 @@
 import Alert from '@app/components/Common/Alert';
+import Image from '@app/components/Common/BaseImage';
 import Modal from '@app/components/Common/Modal';
 import useSettings from '@app/hooks/useSettings';
 import useToasts from '@app/hooks/useToasts';
 import globalMessages from '@app/i18n/globalMessages';
 import defineMessages from '@app/utils/defineMessages';
 import axios from 'axios';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import useSWR from 'swr';
