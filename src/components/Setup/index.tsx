@@ -3,6 +3,7 @@ import JellyfinLogo from '@app/assets/services/jellyfin.svg';
 import PlexLogo from '@app/assets/services/plex.svg';
 import AppDataWarning from '@app/components/AppDataWarning';
 import Alert from '@app/components/Common/Alert';
+import Image from '@app/components/Common/BaseImage';
 import Button from '@app/components/Common/Button';
 import ImageFader from '@app/components/Common/ImageFader';
 import PageTitle from '@app/components/Common/PageTitle';
@@ -14,10 +15,10 @@ import SetupSteps from '@app/components/Setup/SetupSteps';
 import useLocale from '@app/hooks/useLocale';
 import useSettings from '@app/hooks/useSettings';
 import defineMessages from '@app/utils/defineMessages';
+import { getBasedPath } from '@app/utils/navigationUtil';
 import { MediaServerType } from '@server/constants/server';
 import type { Library } from '@server/lib/settings';
 import axios from 'axios';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -62,16 +63,16 @@ const Setup = () => {
     setIsUpdating(false);
     if (response.data.initialized) {
       await axios.post('/api/v1/settings/main', { locale });
-      mutate('/api/v1/settings/public');
+      mutate(getBasedPath('/api/v1/settings/public'));
 
       router.push('/');
     }
   };
 
   const mediaServerSettingsEndpoint: Record<MediaServerType, string | null> = {
-    [MediaServerType.JELLYFIN]: '/api/v1/settings/jellyfin',
-    [MediaServerType.EMBY]: '/api/v1/settings/jellyfin',
-    [MediaServerType.PLEX]: '/api/v1/settings/plex',
+    [MediaServerType.JELLYFIN]: getBasedPath('/api/v1/settings/jellyfin'),
+    [MediaServerType.EMBY]: getBasedPath('/api/v1/settings/jellyfin'),
+    [MediaServerType.PLEX]: getBasedPath('/api/v1/settings/plex'),
     [MediaServerType.NOT_CONFIGURED]: null,
   };
 
@@ -92,7 +93,7 @@ const Setup = () => {
 
   useEffect(() => {
     if (settings.currentSettings.initialized) {
-      router.push('/');
+      router.push(getBasedPath('/'));
     }
 
     if (

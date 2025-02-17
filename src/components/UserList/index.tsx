@@ -18,6 +18,7 @@ import type { User } from '@app/hooks/useUser';
 import { Permission, UserType, useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import defineMessages from '@app/utils/defineMessages';
+import { getBasedPath } from '@app/utils/navigationUtil';
 import { Transition } from '@headlessui/react';
 import {
   BarsArrowDownIcon,

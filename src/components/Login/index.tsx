@@ -2,6 +2,7 @@ import EmbyLogo from '@app/assets/services/emby-icon-only.svg';
 import JellyfinLogo from '@app/assets/services/jellyfin-icon.svg';
 import PlexLogo from '@app/assets/services/plex.svg';
 import Button from '@app/components/Common/Button';
+import Image from '@app/components/Common/BaseImage';
 import ImageFader from '@app/components/Common/ImageFader';
 import PageTitle from '@app/components/Common/PageTitle';
 import LanguagePicker from '@app/components/Layout/LanguagePicker';
@@ -11,12 +12,12 @@ import PlexLoginButton from '@app/components/Login/PlexLoginButton';
 import useSettings from '@app/hooks/useSettings';
 import { useUser } from '@app/hooks/useUser';
 import defineMessages from '@app/utils/defineMessages';
+import { getBasedPath } from '@app/utils/navigationUtil';
 import { Transition } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import { MediaServerType } from '@server/constants/server';
 import axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
-import Image from 'next/image';
 import { useEffect, useRef, useState, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
@@ -71,7 +72,7 @@ const Login = () => {
   // valid user, we redirect the user to the home page as the login was successful.
   useEffect(() => {
     if (user) {
-      router.push('/');
+      router.push(getBasedPath('/'));
     }
   }, [user, router]);
 
@@ -111,42 +112,42 @@ const Login = () => {
     settings.currentSettings.localLogin;
   const additionalLoginOptions = [
     settings.currentSettings.mediaServerLogin &&
-      (settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
-        <PlexLoginButton
-          key="plex"
-          isProcessing={isProcessing}
-          onAuthToken={(authToken) => setAuthToken(authToken)}
-          large={!isJellyfin && !settings.currentSettings.localLogin}
-        />
+    (settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
+      <PlexLoginButton
+        key="plex"
+        isProcessing={isProcessing}
+        onAuthToken={(authToken) => setAuthToken(authToken)}
+        large={!isJellyfin && !settings.currentSettings.localLogin}
+      />
+    ) : (
+      settings.currentSettings.localLogin &&
+      (mediaServerLogin ? (
+        <Button
+          key="seerr"
+          data-testid="seerr-login-button"
+          className="flex-1 bg-transparent"
+          onClick={() => setMediaServerLogin(false)}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/os_icon.svg"
+            alt={settings.currentSettings.applicationTitle}
+            className="mr-2 h-5"
+          />
+          <span>{settings.currentSettings.applicationTitle}</span>
+        </Button>
       ) : (
-        settings.currentSettings.localLogin &&
-        (mediaServerLogin ? (
-          <Button
-            key="seerr"
-            data-testid="seerr-login-button"
-            className="flex-1 bg-transparent"
-            onClick={() => setMediaServerLogin(false)}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/os_icon.svg"
-              alt={settings.currentSettings.applicationTitle}
-              className="mr-2 h-5"
-            />
-            <span>{settings.currentSettings.applicationTitle}</span>
-          </Button>
-        ) : (
-          <Button
-            key="mediaserver"
-            data-testid="mediaserver-login-button"
-            className="flex-1 bg-transparent"
-            onClick={() => setMediaServerLogin(true)}
-          >
-            <MediaServerLogo />
-            <span>{mediaServerName}</span>
-          </Button>
-        ))
-      )),
+        <Button
+          key="mediaserver"
+          data-testid="mediaserver-login-button"
+          className="flex-1 bg-transparent"
+          onClick={() => setMediaServerLogin(true)}
+        >
+          <MediaServerLogo />
+          <span>{mediaServerName}</span>
+        </Button>
+      ))
+    )),
   ].filter((o): o is JSX.Element => !!o);
 
   return (
@@ -216,8 +217,8 @@ const Login = () => {
                 >
                   <div ref={loginRef} className="button-container">
                     {isJellyfin &&
-                    (mediaServerLogin ||
-                      !settings.currentSettings.localLogin) ? (
+                      (mediaServerLogin ||
+                        !settings.currentSettings.localLogin) ? (
                       <JellyfinLogin
                         serverType={settings.currentSettings.mediaServerType}
                         revalidate={revalidate}
@@ -247,9 +248,8 @@ const Login = () => {
                 ))}
 
               <div
-                className={`flex w-full flex-wrap gap-2 ${
-                  !loginFormVisible ? 'flex-col' : ''
-                }`}
+                className={`flex w-full flex-wrap gap-2 ${!loginFormVisible ? 'flex-col' : ''
+                  }`}
               >
                 {additionalLoginOptions}
               </div>
