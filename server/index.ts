@@ -237,7 +237,11 @@ app
     );
     const apiSpecContent = await fs.readFile(API_SPEC_PATH, 'utf-8');
     const apiDocs = yaml.load(apiSpecContent) as Record<string, unknown>;
-    server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
+    server.use(
+      `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/api-docs`,
+      swaggerUi.serve,
+      swaggerUi.setup(apiDocs)
+    );
     server.use(
       `${process.env.NEXT_PUBLIC_BASE_PATH || ''}`,
       OpenApiValidator.middleware({
