@@ -12,11 +12,13 @@ const MoviePage: NextPage<MoviePageProps> = ({ movie }) => {
   return <MovieDetails movie={movie} />;
 };
 
+const API_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const getServerSideProps: GetServerSideProps<MoviePageProps> = async (
   ctx
 ) => {
   const response = await axios.get<MovieDetailsType>(
-    `http://${getHostAndPort()}/api/v1/movie/${ctx.query.movieId}`,
+    `http://${getHostAndPort()}${API_BASE}/api/v1/movie/${ctx.query.movieId}`,
     {
       headers: ctx.req?.headers?.cookie
         ? { cookie: ctx.req.headers.cookie }
