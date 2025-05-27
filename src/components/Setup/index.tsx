@@ -63,7 +63,7 @@ const Setup = () => {
     setIsUpdating(false);
     if (response.data.initialized) {
       await axios.post('/api/v1/settings/main', { locale });
-      mutate(getBasedPath('/api/v1/settings/public'));
+      mutate('/api/v1/settings/public');
 
       router.push('/');
     }

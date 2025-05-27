@@ -86,9 +86,7 @@ const useDiscover = <
         )
         .join('&');
 
-      const fullEndpoint = endpoint.startsWith('/')
-        ? `${basePath}${endpoint}`
-        : endpoint;
+      const fullEndpoint = endpoint.startsWith('/') ? `${endpoint}` : endpoint;
       return `${fullEndpoint}?${finalQueryString}`;
     },
     {
