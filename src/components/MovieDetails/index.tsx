@@ -32,6 +32,7 @@ import ErrorPage from '@app/pages/_error';
 import { sortCrewPriority } from '@app/utils/creditHelpers';
 import defineMessages from '@app/utils/defineMessages';
 import { mediaRefreshInterval } from '@app/utils/refreshIntervalHelper';
+import { getBasedPath } from '@app/utils/navigationUtil';
 import {
   ArrowRightCircleIcon,
   CloudIcon,
@@ -228,7 +229,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     .pop();
   const trailerUrl =
     trailerVideo?.site === 'YouTube' &&
-    settings.currentSettings.youtubeUrl != ''
+      settings.currentSettings.youtubeUrl != ''
       ? `${settings.currentSettings.youtubeUrl}${trailerVideo?.key}`
       : trailerVideo?.url;
 
@@ -482,7 +483,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
           setShowManager(false);
           router.replace(
             {
-              pathname: router.pathname,
+              pathname: getBasedPath(router.pathname),
               query: { movieId: router.query.movieId },
             },
             undefined,
@@ -787,86 +788,86 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
               (ratingData?.rt?.audienceRating &&
                 !!ratingData?.rt?.audienceScore) ||
               ratingData?.imdb?.criticsScore) && (
-              <div className="media-ratings">
-                {ratingData?.rt?.criticsRating &&
-                  typeof ratingData?.rt?.criticsScore === 'number' && (
+                <div className="media-ratings">
+                  {ratingData?.rt?.criticsRating &&
+                    typeof ratingData?.rt?.criticsScore === 'number' && (
+                      <Tooltip
+                        content={intl.formatMessage(messages.rtcriticsscore)}
+                      >
+                        <a
+                          href={ratingData.rt.url}
+                          className="media-rating"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {ratingData.rt.criticsRating === 'Rotten' ? (
+                            <RTRotten className="w-6" />
+                          ) : (
+                            <RTFresh className="w-6" />
+                          )}
+                          <span>{ratingData.rt.criticsScore}%</span>
+                        </a>
+                      </Tooltip>
+                    )}
+                  {ratingData?.rt?.audienceRating &&
+                    !!ratingData?.rt?.audienceScore && (
+                      <Tooltip
+                        content={intl.formatMessage(messages.rtaudiencescore)}
+                      >
+                        <a
+                          href={ratingData.rt.url}
+                          className="media-rating"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {ratingData.rt.audienceRating === 'Spilled' ? (
+                            <RTAudRotten className="w-6" />
+                          ) : (
+                            <RTAudFresh className="w-6" />
+                          )}
+                          <span>{ratingData.rt.audienceScore}%</span>
+                        </a>
+                      </Tooltip>
+                    )}
+                  {ratingData?.imdb?.criticsScore && (
                     <Tooltip
-                      content={intl.formatMessage(messages.rtcriticsscore)}
+                      content={intl.formatMessage(messages.imdbuserscore, {
+                        formattedCount: intl.formatNumber(
+                          ratingData.imdb.criticsScoreCount,
+                          {
+                            notation: 'compact',
+                            compactDisplay: 'short',
+                            maximumFractionDigits: 1,
+                          }
+                        ),
+                      })}
                     >
                       <a
-                        href={ratingData.rt.url}
+                        href={ratingData.imdb.url}
                         className="media-rating"
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {ratingData.rt.criticsRating === 'Rotten' ? (
-                          <RTRotten className="w-6" />
-                        ) : (
-                          <RTFresh className="w-6" />
-                        )}
-                        <span>{ratingData.rt.criticsScore}%</span>
+                        <ImdbLogo className="mr-1 w-6" />
+                        <span>{ratingData.imdb.criticsScore}</span>
                       </a>
                     </Tooltip>
                   )}
-                {ratingData?.rt?.audienceRating &&
-                  !!ratingData?.rt?.audienceScore && (
-                    <Tooltip
-                      content={intl.formatMessage(messages.rtaudiencescore)}
-                    >
+                  {!!data.voteCount && (
+                    <Tooltip content={intl.formatMessage(messages.tmdbuserscore)}>
                       <a
-                        href={ratingData.rt.url}
+                        href={`https://www.themoviedb.org/movie/${data.id}?language=${locale}`}
                         className="media-rating"
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {ratingData.rt.audienceRating === 'Spilled' ? (
-                          <RTAudRotten className="w-6" />
-                        ) : (
-                          <RTAudFresh className="w-6" />
-                        )}
-                        <span>{ratingData.rt.audienceScore}%</span>
+                        <TmdbLogo className="mr-1 w-6" />
+                        <span>{Math.round(data.voteAverage * 10)}%</span>
                       </a>
                     </Tooltip>
                   )}
-                {ratingData?.imdb?.criticsScore && (
-                  <Tooltip
-                    content={intl.formatMessage(messages.imdbuserscore, {
-                      formattedCount: intl.formatNumber(
-                        ratingData.imdb.criticsScoreCount,
-                        {
-                          notation: 'compact',
-                          compactDisplay: 'short',
-                          maximumFractionDigits: 1,
-                        }
-                      ),
-                    })}
-                  >
-                    <a
-                      href={ratingData.imdb.url}
-                      className="media-rating"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <ImdbLogo className="mr-1 w-6" />
-                      <span>{ratingData.imdb.criticsScore}</span>
-                    </a>
-                  </Tooltip>
-                )}
-                {!!data.voteCount && (
-                  <Tooltip content={intl.formatMessage(messages.tmdbuserscore)}>
-                    <a
-                      href={`https://www.themoviedb.org/movie/${data.id}?language=${locale}`}
-                      className="media-rating"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <TmdbLogo className="mr-1 w-6" />
-                      <span>{Math.round(data.voteAverage * 10)}%</span>
-                    </a>
-                  </Tooltip>
-                )}
-              </div>
-            )}
+                </div>
+              )}
             {data.originalTitle &&
               data.originalLanguage !== locale.slice(0, 2) && (
                 <div className="media-fact">
