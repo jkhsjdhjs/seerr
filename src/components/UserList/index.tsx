@@ -937,7 +937,7 @@ const UserList = () => {
                     disabled={user.id === 1 && currentUser?.id !== 1}
                     onClick={() =>
                       router.push(
-                        '/users/[userId]/settings',
+                        getBasedPath('/users/[userId]/settings'),
                         `/users/${user.id}/settings`
                       )
                     }

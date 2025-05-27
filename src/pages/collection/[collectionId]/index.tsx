@@ -12,11 +12,13 @@ const CollectionPage: NextPage<CollectionPageProps> = ({ collection }) => {
   return <CollectionDetails collection={collection} />;
 };
 
+const API_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const getServerSideProps: GetServerSideProps<
   CollectionPageProps
 > = async (ctx) => {
   const response = await axios.get<Collection>(
-    `http://${getHostAndPort()}/api/v1/collection/${ctx.query.collectionId}`,
+    `http://${getHostAndPort()}${API_BASE}/api/v1/collection/${ctx.query.collectionId}`,
     {
       headers: ctx.req?.headers?.cookie
         ? { cookie: ctx.req.headers.cookie }

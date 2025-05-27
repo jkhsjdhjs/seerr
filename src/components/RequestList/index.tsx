@@ -9,6 +9,7 @@ import { Permission, useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import defineMessages from '@app/utils/defineMessages';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { getBasedPath } from '@app/utils/navigationUtil';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -176,7 +177,7 @@ const RequestList = () => {
               onChange={(e) => {
                 setCurrentMediaType(e.target.value as MediaType);
                 router.push({
-                  pathname: router.pathname,
+                  pathname: getBasedPath(router.pathname),
                   query: router.query.userId
                     ? { userId: router.query.userId }
                     : {},
@@ -206,7 +207,7 @@ const RequestList = () => {
               onChange={(e) => {
                 setCurrentFilter(e.target.value as Filter);
                 router.push({
-                  pathname: router.pathname,
+                  pathname: getBasedPath(router.pathname),
                   query: router.query.userId
                     ? { userId: router.query.userId }
                     : {},
@@ -254,7 +255,7 @@ const RequestList = () => {
               onChange={(e) => {
                 setCurrentSort(e.target.value as Sort);
                 router.push({
-                  pathname: router.pathname,
+                  pathname: getBasedPath(router.pathname),
                   query: router.query.userId
                     ? { userId: router.query.userId }
                     : {},
