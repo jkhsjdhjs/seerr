@@ -307,7 +307,7 @@ CoreApp.getInitialProps = async (initialProps) => {
 
         if (router.pathname.match(/(setup|login)/)) {
           ctx.res.writeHead(307, {
-            Location: `/`,
+            Location: `${API_BASE}/`,
           });
           ctx.res.end();
         }
