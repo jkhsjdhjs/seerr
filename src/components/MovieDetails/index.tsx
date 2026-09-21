@@ -32,7 +32,6 @@ import ErrorPage from '@app/pages/_error';
 import { sortCrewPriority } from '@app/utils/creditHelpers';
 import defineMessages from '@app/utils/defineMessages';
 import { mediaRefreshInterval } from '@app/utils/refreshIntervalHelper';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import {
   ArrowRightCircleIcon,
   CloudIcon,
@@ -483,7 +482,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
           setShowManager(false);
           router.replace(
             {
-              pathname: getBasedPath(router.pathname),
+              pathname: router.pathname,
               query: { movieId: router.query.movieId },
             },
             undefined,
