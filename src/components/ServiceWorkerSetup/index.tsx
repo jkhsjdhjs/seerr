@@ -11,8 +11,9 @@ const ServiceWorkerSetup = () => {
 
   useEffect(() => {
     if ('serviceWorker' in navigator && user?.id) {
+      const API_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
       navigator.serviceWorker
-        .register('/sw.js')
+        .register(`${API_BASE}/sw.js`)
         .then(async (registration) => {
           console.log(
             '[SW] Registration successful, scope is:',
