@@ -245,7 +245,6 @@ app
       swaggerUi.setup(apiDocs)
     );
     server.use(
-      `${process.env.NEXT_PUBLIC_BASE_PATH || ''}`,
       OpenApiValidator.middleware({
         apiSpec: API_SPEC_PATH,
         validateRequests: true,
@@ -271,13 +270,18 @@ app
     }
 
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+    const basePathRegex = new RegExp(`^${basePath}`);
     server.use(`${basePath}/api/v1`, routes);
 
     // Do not set cookies so CDNs can cache them
     server.use(`${basePath}/imageproxy`, clearCookies, imageproxy);
     server.use(`${basePath}/avatarproxy`, clearCookies, avatarproxy);
 
-    server.get('*path', (req, res) => handle(req, res));
+    server.get('*path', (req, res) => {
+
+      req.url = req.url.replace(basePathRegex, '') || '/';
+      return handle(req, res);
+    });
     server.use(
       (
         err: { status: number; message: string; errors: string[] },
