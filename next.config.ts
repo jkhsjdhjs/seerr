@@ -23,9 +23,6 @@ const nextConfig: NextConfig = {
         loaders: ['@svgr/webpack'],
         as: '*.js',
       },
-    },
-    resolveAlias: {
-      'next/image': './src/components/Common/BaseImage/index.ts',
     }
   },
   experimental: {
