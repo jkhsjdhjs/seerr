@@ -14,7 +14,6 @@ import { Permission, useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import ErrorPage from '@app/pages/_error';
 import defineMessages from '@app/utils/defineMessages';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import { Transition } from '@headlessui/react';
 import {
   ChatBubbleOvalLeftEllipsisIcon,
@@ -167,7 +166,7 @@ const IssueDetails = () => {
         appearance: 'success',
         autoDismiss: true,
       });
-      router.push(getBasedPath('/issues'));
+      router.push('/issues');
     } catch {
       addToast(intl.formatMessage(messages.toastissuedeletefailed), {
         appearance: 'error',

@@ -1,4 +1,3 @@
-import { getBasedPath } from '@app/utils/navigationUtil';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import type { Permission, PermissionCheckOptions } from './useUser';
@@ -13,7 +12,7 @@ const useRouteGuard = (
 
   useEffect(() => {
     if (user && !hasPermission(permission, options)) {
-      router.push(getBasedPath('/'));
+      router.push('/');
     }
   }, [user, permission, router, hasPermission, options]);
 };

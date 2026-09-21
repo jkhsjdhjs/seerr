@@ -15,7 +15,6 @@ import SetupSteps from '@app/components/Setup/SetupSteps';
 import useLocale from '@app/hooks/useLocale';
 import useSettings from '@app/hooks/useSettings';
 import defineMessages from '@app/utils/defineMessages';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import { MediaServerType } from '@server/constants/server';
 import type { Library } from '@server/lib/settings';
 import axios from 'axios';
@@ -65,14 +64,14 @@ const Setup = () => {
       await axios.post('/api/v1/settings/main', { locale });
       mutate('/api/v1/settings/public');
 
-      router.push(getBasedPath('/'));
+      router.push('/');
     }
   };
 
   const mediaServerSettingsEndpoint: Record<MediaServerType, string | null> = {
-    [MediaServerType.JELLYFIN]: getBasedPath('/api/v1/settings/jellyfin'),
-    [MediaServerType.EMBY]: getBasedPath('/api/v1/settings/jellyfin'),
-    [MediaServerType.PLEX]: getBasedPath('/api/v1/settings/plex'),
+    [MediaServerType.JELLYFIN]: '/api/v1/settings/jellyfin',
+    [MediaServerType.EMBY]: '/api/v1/settings/jellyfin',
+    [MediaServerType.PLEX]: '/api/v1/settings/plex',
     [MediaServerType.NOT_CONFIGURED]: null,
   };
 
@@ -93,7 +92,7 @@ const Setup = () => {
 
   useEffect(() => {
     if (settings.currentSettings.initialized) {
-      router.push(getBasedPath('/'));
+      router.push('/');
     }
 
     if (
