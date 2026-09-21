@@ -34,7 +34,6 @@ import globalMessages from '@app/i18n/globalMessages';
 import ErrorPage from '@app/pages/_error';
 import { sortCrewPriority } from '@app/utils/creditHelpers';
 import defineMessages from '@app/utils/defineMessages';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import { refreshIntervalHelper } from '@app/utils/refreshIntervalHelper';
 import {
   Disclosure,
@@ -539,7 +538,7 @@ const TvDetails = ({ tv }: TvDetailsProps) => {
         onClose={() => {
           setShowManager(false);
           router.replace({
-            pathname: getBasedPath(router.pathname),
+            pathname: router.pathname,
             query: { tvId: router.query.tvId },
           });
         }}

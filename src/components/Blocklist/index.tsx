@@ -13,7 +13,6 @@ import { Permission, useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import ErrorPage from '@app/pages/_error';
 import defineMessages from '@app/utils/defineMessages';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -123,7 +122,7 @@ const Blocklist = () => {
               onChange={(e) => {
                 setCurrentFilter(e.target.value as Filter);
                 router.push({
-                  pathname: getBasedPath(router.pathname),
+                  pathname: router.pathname,
                   query: router.query.userId
                     ? { userId: router.query.userId }
                     : {},

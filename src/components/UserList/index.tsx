@@ -18,7 +18,6 @@ import type { User } from '@app/hooks/useUser';
 import { Permission, UserType, useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import defineMessages from '@app/utils/defineMessages';
-import { getBasedPath } from '@app/utils/navigationUtil';
 import { Transition } from '@headlessui/react';
 import {
   BarsArrowDownIcon,
@@ -937,7 +936,7 @@ const UserList = () => {
                     disabled={user.id === 1 && currentUser?.id !== 1}
                     onClick={() =>
                       router.push(
-                        getBasedPath('/users/[userId]/settings'),
+                        '/users/[userId]/settings',
                         `/users/${user.id}/settings`
                       )
                     }
