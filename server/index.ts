@@ -64,6 +64,8 @@ if (!appDataPermissions()) {
 app
   .prepare()
   .then(async () => {
+    // for some reason, the base path defined in next.config.ts is not respected
+    app.setAssetPrefix(process.env.NEXT_PUBLIC_BASE_PATH || '');
     // Run Overseerr to Seerr migration
     await checkOverseerrMerge();
 
