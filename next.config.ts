@@ -2,7 +2,6 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   env: {
     commitTag: process.env.COMMIT_TAG || 'local',
     unsafeDoNotUseDemo: process.env.UNSAFE_DO_NOT_USE_DEMO,
