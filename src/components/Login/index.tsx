@@ -113,42 +113,42 @@ const Login = () => {
     settings.currentSettings.localLogin;
   const additionalLoginOptions = [
     settings.currentSettings.mediaServerLogin &&
-    (settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
-      <PlexLoginButton
-        key="plex"
-        isProcessing={isProcessing}
-        onAuthToken={(authToken) => setAuthToken(authToken)}
-        large={!isJellyfin && !settings.currentSettings.localLogin}
-      />
-    ) : (
-      settings.currentSettings.localLogin &&
-      (mediaServerLogin ? (
-        <Button
-          key="seerr"
-          data-testid="seerr-login-button"
-          className="flex-1 bg-transparent"
-          onClick={() => setMediaServerLogin(false)}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={basePath + '/os_icon.svg'}
-            alt={settings.currentSettings.applicationTitle}
-            className="mr-2 h-5"
-          />
-          <span>{settings.currentSettings.applicationTitle}</span>
-        </Button>
+      (settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
+        <PlexLoginButton
+          key="plex"
+          isProcessing={isProcessing}
+          onAuthToken={(authToken) => setAuthToken(authToken)}
+          large={!isJellyfin && !settings.currentSettings.localLogin}
+        />
       ) : (
-        <Button
-          key="mediaserver"
-          data-testid="mediaserver-login-button"
-          className="flex-1 bg-transparent"
-          onClick={() => setMediaServerLogin(true)}
-        >
-          <MediaServerLogo />
-          <span>{mediaServerName}</span>
-        </Button>
-      ))
-    )),
+        settings.currentSettings.localLogin &&
+        (mediaServerLogin ? (
+          <Button
+            key="seerr"
+            data-testid="seerr-login-button"
+            className="flex-1 bg-transparent"
+            onClick={() => setMediaServerLogin(false)}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/os_icon.svg"
+              alt={settings.currentSettings.applicationTitle}
+              className="mr-2 h-5"
+            />
+            <span>{settings.currentSettings.applicationTitle}</span>
+          </Button>
+        ) : (
+          <Button
+            key="mediaserver"
+            data-testid="mediaserver-login-button"
+            className="flex-1 bg-transparent"
+            onClick={() => setMediaServerLogin(true)}
+          >
+            <MediaServerLogo />
+            <span>{mediaServerName}</span>
+          </Button>
+        ))
+      )),
   ].filter((o): o is JSX.Element => !!o);
 
   return (
