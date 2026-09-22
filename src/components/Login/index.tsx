@@ -44,8 +44,6 @@ const Login = () => {
     settings.currentSettings.mediaServerLogin
   );
 
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
   // Effect that is triggered when the `authToken` comes back from the Plex OAuth
   // We take the token and attempt to sign in. If we get a success message, we will
   // ask swr to revalidate the user which _should_ come back with a valid user.
@@ -218,8 +216,8 @@ const Login = () => {
                 >
                   <div ref={loginRef} className="button-container">
                     {isJellyfin &&
-                      (mediaServerLogin ||
-                        !settings.currentSettings.localLogin) ? (
+                    (mediaServerLogin ||
+                      !settings.currentSettings.localLogin) ? (
                       <JellyfinLogin
                         serverType={settings.currentSettings.mediaServerType}
                         revalidate={revalidate}
@@ -249,8 +247,9 @@ const Login = () => {
                 ))}
 
               <div
-                className={`flex w-full flex-wrap gap-2 ${!loginFormVisible ? 'flex-col' : ''
-                  }`}
+                className={`flex w-full flex-wrap gap-2 ${
+                  !loginFormVisible ? 'flex-col' : ''
+                }`}
               >
                 {additionalLoginOptions}
               </div>
