@@ -199,7 +199,7 @@ const CoreApp: Omit<NextAppComponentType, 'origGetInitialProps'> = ({
   return (
     <SWRConfig
       value={{
-        fetcher: async (url) => axios.get(url).then((res) => res.data),
+        fetcher: (url) => axios.get(url).then((res) => res.data),
         fallback: {
           [`${API_BASE}/api/v1/auth/me`]: user,
         },

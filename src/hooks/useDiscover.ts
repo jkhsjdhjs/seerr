@@ -65,7 +65,6 @@ const useDiscover = <
   const { hasPermission } = useUser();
   const { addToast } = useToasts();
   const intl = useIntl();
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const { data, error, size, setSize, isValidating, mutate } = useSWRInfinite<
     BaseSearchResult<T> & S
   >(
@@ -86,8 +85,7 @@ const useDiscover = <
         )
         .join('&');
 
-      const fullEndpoint = endpoint.startsWith('/') ? `${endpoint}` : endpoint;
-      return `${fullEndpoint}?${finalQueryString}`;
+      return `${endpoint}?${finalQueryString}`;
     },
     {
       initialSize: 3,
