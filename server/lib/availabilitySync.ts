@@ -1197,7 +1197,11 @@ class AvailabilitySync {
               seasonMeta.Id
             );
 
-            seasonExistsInJellyfin = episodes.length > 0;
+            const validEpisodes = episodes.filter(
+              ep => ep.ParentIndexNumber === season.seasonNumber
+            );
+
+            seasonExistsInJellyfin = validEpisodes.length > 0;
           } catch {
             // If we can't fetch episodes, assume the season exists
             // to avoid false removal
